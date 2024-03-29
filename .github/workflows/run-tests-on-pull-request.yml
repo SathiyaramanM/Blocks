@@ -1,0 +1,31 @@
+name: Run tests on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: pr-${{ github.ref_name }}-branch
+  cancel-in-progress: true
+
+jobs:
+  run-tests:
+    name: Run Flutter Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.5'
+        channel: 'stable'
+
+    - name: Get dependencies
+      run: flutter pub get
+
+    - name: Run Tests
+      run: flutter test
