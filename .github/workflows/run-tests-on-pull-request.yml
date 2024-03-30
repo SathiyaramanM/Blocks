@@ -13,6 +13,9 @@ jobs:
   run-tests:
     name: Run Flutter Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
 
     steps:
     - name: Checkout Repository
